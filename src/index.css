@@ -19,4 +19,7 @@ body {
   font-family: "Fira Sans", sans-serif;
   height: 100%;
   font-size: 1.6rem;
+  background-color: #faf7f5;
+  display: flex;
+  justify-content: center;
 }
