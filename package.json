@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "emotion": "^9.2.12",
+    "geolib": "^2.0.24",
     "pigeon-maps": "^0.11.8",
     "pigeon-marker": "^0.3.4",
     "react": "^16.6.3",
