@@ -9,7 +9,7 @@ import { css } from "emotion";
 class App extends Component {
   defaultCenter = [50.520008, 10];
   defaultZoom = 4.5;
-  state = {
+  defaultState = {
     center: this.defaultCenter,
     zoom: this.defaultZoom,
     score: 0,
@@ -18,6 +18,7 @@ class App extends Component {
     markerPosition: null,
     distance: null
   };
+  state = { ...this.defaultState };
   calcDistance = () => {
     let distance = getDistance(capitalCities[this.state.currentCityIndex], {
       latitude: this.state.markerPosition[0],
@@ -45,7 +46,11 @@ class App extends Component {
       distance: null
     });
   };
+  resetState = () => {
+    this.setState({ ...this.defaultState });
+  };
   render() {
+    const isGameOver = this.state.kilometersLeft <= 0;
     const descriptionStyle = css`
       font-weight: 500;
       letter-spacing: 1px;
@@ -87,7 +92,9 @@ class App extends Component {
           >
             {this.state.score} {this.state.score === 1 ? "city " : "cities "}
             placed <br />
-            {this.state.kilometersLeft} kilometers left
+            {!isGameOver
+              ? `${this.state.kilometersLeft} kilometers left`
+              : "Game over!"}
           </h1>
           {this.state.distance ? (
             <span className={descriptionStyle}>
@@ -96,10 +103,12 @@ class App extends Component {
               {this.state.distance} kilometers
             </span>
           ) : (
-            <span className={descriptionStyle}>
-              Select the location of "
-              {capitalCities[this.state.currentCityIndex].capitalCity}"
-            </span>
+            !isGameOver && (
+              <span className={descriptionStyle}>
+                Select the location of "
+                {capitalCities[this.state.currentCityIndex].capitalCity}"
+              </span>
+            )
           )}
         </header>
         <Map
@@ -139,11 +148,19 @@ class App extends Component {
         >
           <Button
             onClick={
-              this.state.distance ? this.calcRemainingKm : this.calcDistance
+              this.state.distance
+                ? this.calcRemainingKm
+                : isGameOver
+                ? this.resetState
+                : this.calcDistance
             }
-            disabled={this.state.markerPosition ? false : true}
+            disabled={this.state.markerPosition || isGameOver ? false : true}
           >
-            {this.state.distance ? "Next" : "Confirm"}
+            {this.state.distance
+              ? "Proceed"
+              : isGameOver
+              ? "Restart"
+              : "Confirm"}
           </Button>
         </footer>
       </div>
