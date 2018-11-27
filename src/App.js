@@ -69,6 +69,10 @@ class App extends Component {
           box-shadow: 0 2px 6px 0 hsl(247, 52%, 12%, 0.2);
           overflow: hidden;
           background-color: #fff;
+          @media (max-width: 815px) {
+            width: 100vw;
+            margin-top: 0;
+          }
         `}
       >
         <header
@@ -118,7 +122,6 @@ class App extends Component {
           center={this.state.center}
           onClick={({ latLng }) => this.setState({ markerPosition: latLng })}
           zoom={this.state.zoom}
-          width={800}
           height={500}
         >
           {this.state.markerPosition && (
@@ -141,8 +144,10 @@ class App extends Component {
             height: 7rem;
             padding: 2rem 1rem;
             align-items: center;
-            > * {
-              margin-left: 1rem;
+            @media (max-height: 715px) {
+              position: fixed;
+              bottom: 0;
+              right: 0;
             }
           `}
         >
