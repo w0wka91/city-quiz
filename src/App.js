@@ -50,7 +50,9 @@ class App extends Component {
     this.setState({ ...this.defaultState });
   };
   render() {
-    const isGameOver = this.state.kilometersLeft <= 0;
+    const isGameOver =
+      this.state.kilometersLeft <= 0 ||
+      this.state.currentCityIndex === capitalCities.length - 1;
     const descriptionStyle = css`
       font-weight: 500;
       letter-spacing: 1px;
